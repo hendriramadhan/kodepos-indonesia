@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Card, Col, Container, Form, ListGroup, Row } from "react-bootstrap";
+import { useAsyncError } from "react-router-dom";
 
 import "./index.css";
 
@@ -10,21 +11,20 @@ const Index = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    setLoading(true);
     axios
       .get(`https://kodepos.vercel.app/search/?q=${search}`)
       .then((response) => {
         setData(response.data.data);
-        console.log(data);
+        // console.log(data);
         setLoading(false);
-      })
-      .finally(() => {
-        // Clear the data when the component unmounts
-        return () => {
-          setSearch("");
-          setLoading(true);
-          setData([]);
-        };
       });
+    // .finally(() => {
+    return () => {
+      setData([]);
+      setLoading(true);
+    };
+    // });
   }, [search]);
 
   return (
@@ -42,13 +42,11 @@ const Index = () => {
           />
         </Col>
       </Row>
-      <Row>
+      <Row className="d-flex justify-content-center">
         {loading ? (
-          <Row className="d-flex justify-content-center mt-5">
-            <Col md={1}>
-              <div class="chaotic-orbit"></div>
-            </Col>
-          </Row>
+          <Col md={1} className="d-flex justify-content-center mt-5">
+            <div className="chaotic-orbit"></div>
+          </Col>
         ) : (
           data?.map((data, key) => (
             <Card className="m-2 mt-2" style={{ width: "22rem" }} key={key}>

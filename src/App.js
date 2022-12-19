@@ -1,7 +1,7 @@
 import "./App.css";
 import Menu from "./component/menu";
 import React from "react";
-import Index from "./component";
+import Index from "./component/Index";
 import { Route, Routes } from "react-router-dom";
 import Contact from "./component/contact";
 import Privacy from "./component/privacy";
